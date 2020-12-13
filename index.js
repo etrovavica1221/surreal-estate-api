@@ -22,7 +22,7 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(methodOverride());
 
-mongoose.connect(process.env.DATABASE_CONN,(err)=>{
+mongoose.connect(`process.env.DATABASE_CONN`,(err)=>{
 if(err) throw err;
 console.log("DB Connected Successfully");
 })
