@@ -22,9 +22,10 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(methodOverride());
 
-mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}.@cluster0.s4af9.mongodb.net/surreal-estate?retryWrites=true&w=majority`,(err)=>{
-if(err) throw err;
-console.log("DB Connected Successfully");
+mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}.@cluster0.s4af9.mongodb.net/surreal-estate?retryWrites=true&w=majority`,{
+  useNewUrlParser:true, 
+  useCreateIndex:true, 
+  useUnifiedTopology: true
 })
 
 restify.serve(router, PropertyListingModel);
