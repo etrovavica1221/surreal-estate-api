@@ -33,7 +33,7 @@ restify.serve(router, FavouriteModel);
 
 app.use(router);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/v1', router);
+app.use('/', router);
 
 expressListRoutes({}, 'Endpoints:', router );
 
