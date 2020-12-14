@@ -22,10 +22,18 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(methodOverride());
 
-mongoose.connect(`process.env.DATABASE_CONN`,(err)=>{
-if(err) throw err;
-console.log("DB Connected Successfully");
+const uri = process.env.DATABASE_CONN;
+
+mongoose.connect(uri,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  }).then(() => {
+    console.log('Connection established with MongoDB');
 })
+.catch(error => console.error(error.message));
 
 restify.serve(router, PropertyListingModel);
 restify.serve(router, FavouriteModel);
