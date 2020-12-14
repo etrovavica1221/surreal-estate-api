@@ -12,11 +12,10 @@ const PropertyListingModel = require('./models/property');
 const FavouriteModel = require('./models/favourite');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const morgan = require('morgan'); 
+app.use(morgan('tiny'));
 
-require('dotenv').config({
-  path: path.join(__dirname, './.env'),
-});
-
+require('dotenv').config();
 app.use(cors({ credentials: true, origin: true }));
 app.options('*', cors());
 app.use(bodyParser.json());
