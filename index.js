@@ -12,6 +12,7 @@ const PropertyListingModel = require('./models/property');
 const FavouriteModel = require('./models/favourite');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const { connect, connection } = require('mongoose');
 const morgan = require('morgan'); 
 app.use(morgan('tiny'));
 
@@ -23,7 +24,7 @@ app.use(methodOverride());
 
 const uri = process.env.DATABASE_CONN;
 
-mongoose.connect(uri,
+mongoose.connect(`${uri}`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -33,6 +34,25 @@ mongoose.connect(uri,
     console.log('Connection established with MongoDB');
 })
 .catch(error => console.error(error.message));
+
+connection.on('connected', () => {
+  console.log('Mongoose connected to DB Cluster');
+})
+
+connection.on('error', (error) => {
+  console.error(error.message);
+})
+
+connection.on('disconnected', () => {
+  console.log('Mongoose Disconnected');
+})
+
+process.on('SIGINT', () => {
+  connection.close(() => {
+      console.log('Mongoose connection closed on Application Timeout');
+      process.exit(0);
+  })
+})
 
 restify.serve(router, PropertyListingModel);
 restify.serve(router, FavouriteModel);
