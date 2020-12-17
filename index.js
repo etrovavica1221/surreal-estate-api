@@ -13,8 +13,6 @@ const FavouriteModel = require('./models/favourite');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const { connect, connection } = require('mongoose');
-const morgan = require('morgan'); 
-app.use(morgan('tiny'));
 
 require('dotenv').config();
 app.use(cors({ credentials: true, origin: true }));
