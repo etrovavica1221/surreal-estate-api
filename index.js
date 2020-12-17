@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 const uri = process.env.DATABASE_CONN;
-
+console.log("Database_URL", uri);
 mongoose.connect(`${uri}`,
   {
     useNewUrlParser: true,
